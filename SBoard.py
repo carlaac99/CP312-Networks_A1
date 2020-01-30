@@ -1,8 +1,3 @@
-'''
-Created on Jan. 28, 2020
-
-@author: nicolelaslavic
-'''
 # Import socket module
 from socket import * 
 import sys # In order to terminate the program
@@ -20,7 +15,7 @@ for i in range(4, 8):
     colour_var = sys.argv[i].upper()
     colour_list.append(colour_var)
   
-    
+
 # Create a TCP server socket
 #(AF_INET is used for IPv4 protocols)
 #(SOCK_STREAM is used for TCP)
@@ -72,7 +67,6 @@ while True:
 
     request= sent[0].upper()
     
-        
     if request=='PIN':
         
         result = 'PIN'
@@ -93,16 +87,18 @@ while True:
         note.y = sent[2]
         note.width = sent[3]
         note.height = sent[4]
-        note.colour = sent[5]
+        note.colour = sent[5].upper()
         note.message = sent[6].upper()
-        if ((note.x + note.width) <= boardWidth) and ((note.y + note.height) <= boardHeight):
-            if (colour_list.contains(note.colour)):
-                result = 'POST'
-                board.append(note.message)
-            else:
-                result = "Choose colour that is available for note"
-        else:
-            result = 'note not within the board parameters'
+        result = "note.x"
+#         if ((note.x + note.width) <= boardWidth) and ((note.y + note.height) <= boardHeight):
+#             if (colour_list.contains(note.colour)):
+#                 result = 'POST'
+#                 board.append(note.message)
+
+#             else:
+#                 result = "Choose colour that is available for note"
+#         else:
+#             result = 'note not within the board parameters'
     elif request == 'CLEAR':
         result = "CLEAR"
     
@@ -124,8 +120,8 @@ while True:
   
         
         
-        
-        connectionSocket.close()
-        connectionSocket.sendall(result.encode())
+    connectionSocket.send(result.encode())
+    connectionSocket.close()
+    
         
 sys.exit()#Terminate the program after sending the corresponding data
