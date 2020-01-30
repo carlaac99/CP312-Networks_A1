@@ -9,15 +9,15 @@ boardWidth = int(sys.argv[2])   # Width of board
 boardHeight = int(sys.argv[3])  # Height of board
 print("board width: ", boardWidth)
 print("board height: ", boardHeight)
-colour_string=""
-board = []
 
+colour_string = []
+Board = []
+
+#change to while loop
 for i in range(4, 8):
     colour_var = sys.argv[i].upper()
-    colour_string += colour_string + " " + colour_var
-    
-print(colour_string)
-    
+    colour_string.append(colour_var)
+    print(colour_string)
 serverSocket = socket(AF_INET, SOCK_STREAM)
 
 # Assign a port number
@@ -92,20 +92,26 @@ while True:
         width = int(sent[3])
         height = int(sent[4])
         
-        colour = sent[5]
+        colour = sent[5].upper()
         
+        incolour=False
         
-        note= Note(x, y,width, height, colour,new_message,0)
+        note= Note(x, y, width, height, colour, new_message, 0)
 
-        result = 'POST'
+        #result = 'POST'
         
         if ((x+ width) <= boardWidth) and ((y + height) <= boardHeight):
             
-            if (colour_string.__contains__(colour)):
-                result = 'POST'
+            for i in colour_string:
+                
+                if (i==colour):
+                    incolour=True
+            
+            if(incolour==True):
                 Board.append(note)
+                result="it has been appended" 
             else:
-                result = "Choose colour that is available for note"
+                result="it could not be appended"  
         else:
             print(x+y)
             result = x+y
