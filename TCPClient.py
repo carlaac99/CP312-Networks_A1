@@ -16,9 +16,6 @@ print("1-connect \n2-disconnect \n3-POST \n4-GET \n5-PIN \n6-UNPIN \n7-CLEAR")
 option = input("Enter menu option number: ")
 
 while(option<'8' and option>'0'):
-   
-    
-
     if option == '1':
         
         user_input = 'CONNECT'
