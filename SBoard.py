@@ -67,11 +67,38 @@ class ClientThread(threading.Thread):
                 
                 
                 #do something
-            elif request=='GET':
-                print("GET")
+            elif request=='GET': #change so user could request all at once
+                user_get = sent[1].upper()
+                all_on_board = ""
+                total = ""
+                if (user_get == 'COLOUR='):
+                    colour_choice = sent[2].upper()
+                    for i in Board:
+                        if(i.colour == colour_choice):
+                            all_on_board = all_on_board + i + "\n"
+                    result = str(all_on_board)
+                elif(user_get == 'CONTAINS='):
+                    x_cord = sent[3]
+                    y_cord = sent[4]
+                    refers = sent[5]
+                    for i in Board:
+                        if(x_cord == i.x and y_cord == i.y):
+                            all_on_board = all_on_board + i + "\n"
+                    if (refers == 'REFERSTO='):
+                        for i in all_on_board:
+                            if(x_cord == i.x and y_cord == i.y):
+                                total = total + i + "\n"
+                    else:
+                        result = str(total)
+                elif(user_get == 'PINS='):
+                    for i in Board:
+                        if(i.pins >= 1):
+                            all_on_board = all_on_board + i + "\n"
+                    result = str(all_on_board)
+                else:
+                    result = "Note not on board"
                 
-                result = "GET"
-                #do something
+                    #do something
             elif request == 'UNPIN':
                 
                 
@@ -159,6 +186,10 @@ class Note(object):
         self.x = x
         self.y = y
         self.pins=pins
+        
+   def __str__(self):
+        return "%s %s %s %s %s %s %s" % (self.x, self.y, self.width, self.height, self.colour, self.message, self.pins)
+    
         
 Board=[]
 while True:
