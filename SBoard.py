@@ -74,29 +74,37 @@ class ClientThread(threading.Thread):
                 if (user_get == 'COLOUR='):
                     colour_choice = sent[2].upper()
                     for i in Board:
-                        if(i.colour == colour_choice):
-                            all_on_board = all_on_board + i + "\n"
-                    result = str(all_on_board)
+                        colourr = str(i.colour)
+                        if(colourr == colour_choice):
+                            all_on_board = all_on_board + str(i)
+                          
                 elif(user_get == 'CONTAINS='):
-                    x_cord = sent[3]
-                    y_cord = sent[4]
-                    refers = sent[5]
+                    x_cord = sent[2]
+                    y_cord = sent[3]
+                    
                     for i in Board:
-                        if(x_cord == i.x and y_cord == i.y):
-                            all_on_board = all_on_board + i + "\n"
-                    if (refers == 'REFERSTO='):
-                        for i in all_on_board:
-                            if(x_cord == i.x and y_cord == i.y):
-                                total = total + i + "\n"
-                    else:
-                        result = str(total)
-                elif(user_get == 'PINS='):
-                    for i in Board:
-                        if(i.pins >= 1):
-                            all_on_board = all_on_board + i + "\n"
-                    result = str(all_on_board)
-                else:
-                    result = "Note not on board"
+                        xx = str(i.x)
+                        yy = str(i.y)
+                        if(x_cord == xx and y_cord == yy):
+                            all_on_board = all_on_board + str(i)
+#                     if (sent[5].not_empty()):
+#                         if(sent[5].upper()):
+#                             for i in all_on_board:
+#                                 xx = str(i.x)
+#                                 yy = str(i.y)
+#                                 if(x_cord == xx and y_cord == yy):
+#                                     total = total + str(i)      
+#                             all_on_board = total
+                     
+                          
+#                 elif(user_get == 'PINS='):
+#                     for i in Board:
+#                         if(i.pins >= 1):
+#                             all_on_board = all_on_board + i + "\n"
+#                     result = str(all_on_board)
+#                 else:
+#                     result = "Note not on board"
+                result = all_on_board
                 
                     #do something
             elif request == 'UNPIN':
