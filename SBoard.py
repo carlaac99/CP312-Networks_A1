@@ -68,15 +68,22 @@ class ClientThread(threading.Thread):
                 
                 #do something
             elif request=='GET': #change so user could request all at once
-                for i in sent:
-                    user_get = sent[i].upper()
-                    all_on_board = ""
+                             
+                all_on_board = ""
+                for i in range (0,len(sent)):
+                    
+                    user_get =sent[i].upper()
+                    
+                    print("\nuser_get",user_get)
+                    
                     if (user_get == 'COLOUR='):
                         colour_choice = sent[i+1].upper()
-                        for i in Board:
-                            colourr = str(i.colour)
+                        
+                        for c in Board:
+                            colourr = str(c.colour)
                             if(colourr == colour_choice):
-                                all_on_board = all_on_board + str(i) + ", "
+                                all_on_board = all_on_board + str(c) + ", "
+                                
                               
                     elif(user_get == 'CONTAINS='):
                         x_cord = sent[i+1]
@@ -106,7 +113,7 @@ class ClientThread(threading.Thread):
                         
                     else:
                         result = "Note not on board"
-                        
+                print("all on board: ",all_on_board )
                 result = all_on_board
             elif request == 'UNPIN':
                 
