@@ -193,11 +193,13 @@ class ClientThread(threading.Thread):
                 sys.exit()
                 #do something
             elif request== 'CLEAR':
-                
-                for i in Board:
-                    Board.pop(i)
+                print("is clear wokring? yes")
+                i=0
+                while(i< len(Board)):
+                    if Board[i].pins==0:
+                        Board.pop(i)
                     
-                result='Board now clear'
+                result="Board now clear"
                 
             else:
                 result="nothing"
