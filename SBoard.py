@@ -95,16 +95,17 @@ class ClientThread(threading.Thread):
                                     
                         #fix
                         elif(user_get == 'CONTAINS='):
-                            x = sent[i+1]
-                            y = sent[i+2]
+                            x = int(sent[i+1])
+                            y = int(sent[i+2])
                             
                             for k in results_array:
-                                results_array.append(k.x)
-                                results_array.append(k.y)
-                                results_array.append(x)
-                                results_array.append(y)
-#                                 if(k.x != x_cord or y_cord != k.y):
-#                                     results_array.remove(k)
+                                print("in result array",k.x)
+
+
+                                if(k.x != x and y!= k.y):
+                                    results_array.remove(k)
+                                    print("has removed",k)
+        
         
                                     
                         elif (user_get == 'REFERSTO='):
