@@ -76,10 +76,13 @@ class ClientThread(threading.Thread):
                 
                 if(len(sent) == 2 and sent[1].upper() != 'PINS'):
                     if(sent[1].upper() == "COLOUR=" or sent[1].upper() == "CONTAINS=" or sent[1].upper() == "REFERSTO="):
-                        for f in Board:
-                            all_on_board = all_on_board + str(f) + ", "
+                        if(len(Board) == 0):
+                            results_array = ["Board is empty"]
+                        else:
+                            for f in Board:
+                                all_on_board = all_on_board + str(f) + ", "
                     else:
-                        all_on_board = "Please choose an appropriate option"
+                        results_array = ["Please choose an appropriate option"]
                 else:
                     results_array = Board.copy()
                     for i in range (0,len(sent)):
