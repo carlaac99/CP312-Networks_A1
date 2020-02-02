@@ -13,6 +13,7 @@ print("board height: ", boardHeight)
 
 colour_string = []
 Board = []
+Pins = []
 
 #change to while loop
 for i in range(4, 8):
@@ -61,6 +62,7 @@ class ClientThread(threading.Thread):
                 for i in Board:
                     if i.x==x and i.y==y:
                         i.pins+=1
+                        Pins.append(i)
                 
                 print("PIN")
                 result = 'PIN'
@@ -72,13 +74,11 @@ class ClientThread(threading.Thread):
                 all_on_board = ""
                 results_array = []
                 
-                if(len(sent) == 2):
+                if(len(sent) == 2 and sent[1].upper() != 'PINS'):
                     for f in Board:
                         all_on_board = all_on_board + str(f) + ", "
                 else:
-                    for p in Board:
-                        results_array.append(p)
-                
+                    results_array = Board.copy()
                     for i in range (0,len(sent)):
                     
                         user_get =sent[i].upper()
@@ -92,36 +92,37 @@ class ClientThread(threading.Thread):
                                 colourr = str(c.colour)
                                 if(colourr != colour_choice):
                                     results_array.remove(c)
-                                    
-                        #fix
+            
+                             
                         elif(user_get == 'CONTAINS='):
                             x = int(sent[i+1])
                             y = int(sent[i+2])
                             
                             for k in results_array:
-                                print("in result array",k.x)
-
-
                                 if(k.x != x and y!= k.y):
                                     results_array.remove(k)
-                                    print("has removed",k)
         
-        
-                                    
                         elif (user_get == 'REFERSTO='):
                             keyword = sent[i+1]
                             for j in results_array:
                                 if keyword not in j.message: 
                                     results_array.remove(j)
                             
-                        #fix
-                        elif(user_get == 'PINS='):
-                            for a in results_array:
-                                if(int(a.pins) < 1):
-                                    results_array.remove(a)
+                        elif(user_get == 'PINS'):
+                            if len(Pins) == 0:
+                                results_array = ["None"]
+                            else:
+                                index = 0
+                                for u in results_array:
+                                    if(u.pins < 1):
+                                        results_array.pop(index)
+                                    index = index + 1
+                                
                 
                 for n in results_array:
                     all_on_board = all_on_board + str(n) + ", "
+                    
+                result = all_on_board
             elif request == 'UNPIN':
                 
                 
