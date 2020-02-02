@@ -75,8 +75,11 @@ class ClientThread(threading.Thread):
                 results_array = []
                 
                 if(len(sent) == 2 and sent[1].upper() != 'PINS'):
-                    for f in Board:
-                        all_on_board = all_on_board + str(f) + ", "
+                    if(sent[1].upper() == "COLOUR=" or sent[1].upper() == "CONTAINS=" or sent[1].upper() == "REFERSTO="):
+                        for f in Board:
+                            all_on_board = all_on_board + str(f) + ", "
+                    else:
+                        all_on_board = "Please choose an appropriate option"
                 else:
                     results_array = Board.copy()
                     for i in range (0,len(sent)):
@@ -88,25 +91,34 @@ class ClientThread(threading.Thread):
                         if (user_get == 'COLOUR='):
                             
                             colour_choice = sent[i+1].upper()
-                            for c in results_array:
-                                colourr = str(c.colour)
+                            index = 0
+                            while(index < len(results_array)):
+                                colourr = str(results_array[index].colour)
                                 if(colourr != colour_choice):
-                                    results_array.remove(c)
+                                    results_array.remove(index)
+                                    index = index -1
+                                index = index + 1
             
                              
                         elif(user_get == 'CONTAINS='):
                             x = int(sent[i+1])
                             y = int(sent[i+2])
+                            index = 0
                             
-                            for k in results_array:
-                                if(k.x != x and y!= k.y):
-                                    results_array.remove(k)
+                            while (index < len(results_array)):
+                                if(results_array[index].x != x and y!= results_array[index].y):
+                                    results_array.remove(index)
+                                    index = index - 1
+                                index = index + 1
         
                         elif (user_get == 'REFERSTO='):
                             keyword = sent[i+1]
-                            for j in results_array:
-                                if keyword not in j.message: 
-                                    results_array.remove(j)
+                            index = 0
+                            while (index < len(results_array)):
+                                if keyword not in results_array[index].message: 
+                                    results_array.remove(index)
+                                    index = index -1
+                                index=index+1
                             
                         elif(user_get == 'PINS'):
                             if len(Pins) == 0:
@@ -118,7 +130,6 @@ class ClientThread(threading.Thread):
                                         results_array.pop(index)
                                         index = index - 1
                                     index = index + 1
-                                
                                 
                 
                 for n in results_array:
