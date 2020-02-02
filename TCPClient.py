@@ -1,7 +1,3 @@
-'''
-Created on Jan. 28, 2020
-@author: carla castaneda
-'''
 # Import socket module
 from socket import * 
 import sys # In order to terminate the program
@@ -40,17 +36,20 @@ while(option<8 and option> 0):
         
     elif option == 2:
         user_input = 'DISCONNECT'
-        
     elif option == 3:
+        print("input: <x-coordinate y-coordinate width height colour message>")
         user_input = input("Enter POST: ")
         user_input = 'POST '+ user_input
     elif option == 4:
+        print("options: \npins (all pinned notes) \ncontains= <x-coordinate y-coordinate> \nrefersTo= <string> \ncolour= <colour string> \ncolour= <empty> (all on board)")
         user_input = input("Enter GET: ")
         user_input = 'GET '+ user_input
     elif option == 5:
+        print("input: x-coordinate y-coordinate")
         user_input = input("Enter PIN: ")
         user_input = 'PIN '+ user_input
     elif option == 6:
+        print("input: x-coordinate y-coordinate")
         user_input = input("Enter UNPIN: ")
         user_input = 'UNPIN '+ user_input
     elif option ==7:
