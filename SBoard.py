@@ -70,50 +70,57 @@ class ClientThread(threading.Thread):
             elif request=='GET': #change so user could request all at once
                              
                 all_on_board = ""
-                for i in range (0,len(sent)):
+                results_array = []
+                
+                if(len(sent) == 2):
+                    for f in Board:
+                        all_on_board = all_on_board + str(f) + ", "
+                else:
+                    for p in Board:
+                        results_array.append(p)
+                
+                    for i in range (0,len(sent)):
                     
-                    user_get =sent[i].upper()
+                        user_get =sent[i].upper()
                     
-                    print("\nuser_get",user_get)
+                        print("\nuser_get",user_get)
                     
-                    if (user_get == 'COLOUR='):
-                        colour_choice = sent[i+1].upper()
-                        
-                        for c in Board:
-                            colourr = str(c.colour)
-                            if(colourr == colour_choice):
-                                all_on_board = all_on_board + str(c) + ", "
-                                
-                              
-                    elif(user_get == 'CONTAINS='):
-                        x_cord = sent[i+1]
-                        y_cord = sent[i+1]
-                        
-                        for i in Board:
-                            xx = str(i.x)
-                            yy = str(i.y)
-                            if(x_cord == xx and y_cord == yy):
-                                all_on_board = all_on_board + str(i) + ", "
-                                
-                                
-                    elif (user_get == 'REFERSTO='):
-                        for i in all_on_board:
-                            xx = str(i.x)
-                            yy = str(i.y)
-                            if(x_cord == xx and y_cord == yy):
-                                all_on_board = all_on_board + str(i) + ", "    
-                        
-                         
-                    elif(user_get == 'PINS='):
-                        for i in Board:
-                            pins = int(i.pins)
-                            if(pins >= 1):
-                                all_on_board = all_on_board + str(i) + ", "
-                        
-                        
-                    else:
-                        result = "Note not on board"
-                print("all on board: ",all_on_board )
+                        if (user_get == 'COLOUR='):
+                            
+                            colour_choice = sent[i+1].upper()
+                            for c in results_array:
+                                colourr = str(c.colour)
+                                if(colourr != colour_choice):
+                                    results_array.remove(c)
+                                    
+                        #fix
+                        elif(user_get == 'CONTAINS='):
+                            x_cord = int(sent[i+1])
+                            y_cord = int(sent[i+2])
+                            
+                            for b in results_array:
+                                xx = int(b.x)
+                                yy = int(b.y)
+                                if(x_cord != xx or y_cord != yy):
+                                    results_array.remove(b)
+        
+                                    
+                        elif (user_get == 'REFERSTO='):
+                            keyword = sent[i+1]
+                            for j in results_array:
+                                if keyword not in j.message: 
+                                    results_array.remove(j)
+                            
+                        #fix
+                        elif(user_get == 'PINS='):
+                            for a in results_array:
+                                pins = int(a.pins)
+                                if(pins < 1):
+                                    results_array.remove(a)
+                
+                for n in results_array:
+                    all_on_board = all_on_board + str(n) + ", "
+                    
                 result = all_on_board
             elif request == 'UNPIN':
                 
