@@ -113,10 +113,12 @@ class ClientThread(threading.Thread):
                                 results_array = ["None"]
                             else:
                                 index = 0
-                                for u in results_array:
-                                    if(u.pins < 1):
+                                while(index < len(results_array)):
+                                    if(results_array[index].pins < 1):
                                         results_array.pop(index)
+                                        index = index - 1
                                     index = index + 1
+                                
                                 
                 
                 for n in results_array:
