@@ -95,14 +95,16 @@ class ClientThread(threading.Thread):
                                     
                         #fix
                         elif(user_get == 'CONTAINS='):
-                            x_cord = int(sent[i+1])
-                            y_cord = int(sent[i+2])
+                            x = sent[i+1]
+                            y = sent[i+2]
                             
-                            for b in results_array:
-                                xx = int(b.x)
-                                yy = int(b.y)
-                                if(x_cord != xx or y_cord != yy):
-                                    results_array.remove(b)
+                            for k in results_array:
+                                results_array.append(k.x)
+                                results_array.append(k.y)
+                                results_array.append(x)
+                                results_array.append(y)
+#                                 if(k.x != x_cord or y_cord != k.y):
+#                                     results_array.remove(k)
         
                                     
                         elif (user_get == 'REFERSTO='):
@@ -114,14 +116,11 @@ class ClientThread(threading.Thread):
                         #fix
                         elif(user_get == 'PINS='):
                             for a in results_array:
-                                pins = int(a.pins)
-                                if(pins < 1):
+                                if(int(a.pins) < 1):
                                     results_array.remove(a)
                 
                 for n in results_array:
                     all_on_board = all_on_board + str(n) + ", "
-                    
-                result = all_on_board
             elif request == 'UNPIN':
                 
                 
