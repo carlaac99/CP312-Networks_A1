@@ -44,11 +44,19 @@ while(True):
     elif option == 3:
         print("input: <x-coordinate y-coordinate width height colour message>")
         user_input = input("Enter POST: ")
-        user_input = 'POST '+ user_input
+        if(user_input == ""):
+            print("This method requires user input.")
+            user_input = "!"
+        else:
+            user_input = 'POST '+ user_input
     elif option == 4:
         print("options: \npins (all pinned notes) \ncontains= <x-coordinate y-coordinate> \nrefersTo= <string> \ncolour= <colour string> \ncolour= <empty> (all on board)")
         user_input = input("Enter GET: ")
-        user_input = 'GET '+ user_input
+        if(user_input == ""):
+            print("This method requires user input.")
+            user_input = "!"
+        else:
+            user_input = 'GET '+ user_input
     elif option == 5:
         print("input: x-coordinate y-coordinate")
         user_input = input("Enter PIN: ")
