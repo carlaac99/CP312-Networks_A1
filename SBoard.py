@@ -269,7 +269,7 @@ class Note(object):
         self.y = y
         self.pins=pins
     def __str__(self):
-        return "%s %s %s %s %s %s %s" % (self.x, self.y, self.width, self.height, self.colour, self.message, self.pins)
+        return "x-cord: %s y-cord: %s width: %s height: %s colour: %s message: %s pins: %s" % (self.x, self.y, self.width, self.height, self.colour, self.message, self.pins)
    
 
 while True:
@@ -285,6 +285,9 @@ while True:
     
 serverSocket.close()  
 sys.exit()
+        
+    
+
         
     
 
