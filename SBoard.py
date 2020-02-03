@@ -141,14 +141,10 @@ class ClientThread(threading.Thread):
                 result = all_on_board
             elif request == 'UNPIN':
                 
-                
-                
-                print("UNPIN")
                 result = "UNPIN"
                 #do something
                 
             elif request =='POST':
-                print("POST")
                 cb =' '
                 new_message= cb.join(sent[6:])
           
@@ -181,13 +177,9 @@ class ClientThread(threading.Thread):
                     result = "coordinates not on board"
                 
             elif request=='CONNECT':
-                
-                print("connecting")
                 result = "connecting"
                 #do something
             elif request=='DISCONNECT':
-                
-                print("DISCONNECT")
                 result = "disconnecting"
             
                 connectionSocket.close()
@@ -195,7 +187,6 @@ class ClientThread(threading.Thread):
                 sys.exit()
                 #do something
             elif request== 'CLEAR':
-                print("is clear wokring? yes")
                 i=0
                 while(i< len(Board)):
                     if Board[i].pins==0:
