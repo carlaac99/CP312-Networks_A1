@@ -218,9 +218,10 @@ class ClientThread(threading.Thread):
             elif request=='CONNECT':
                 
       
-                result="note colours: "
+                result="\nnote colours: "
                 for i in colour_string:
                     result=result+i+" "
+                result+="\nBoard width: "+ str(boardWidth) +" Board Height: " + str(boardHeight)
 
             elif request=='DISCONNECT':
                 
