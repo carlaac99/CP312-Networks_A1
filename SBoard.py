@@ -161,7 +161,7 @@ class ClientThread(threading.Thread):
         
                 #result = 'POST'
                 
-                if ((x+ width) <= boardWidth) and ((y + height) <= boardHeight and (x+width) >= 0 and (y+height) >= 0):
+                if ((x+ width) <= boardWidth) and ((y + height) <= boardHeight and (x+width) >= 0 and (y+height) >= 0 and x>0 and y>0):
                     
                     for i in colour_string:
                         
