@@ -178,8 +178,7 @@ class ClientThread(threading.Thread):
                     else:
                         result="it could not be appended"  
                 else:
-                    print(x+y)
-                    result = x+y
+                    result = "coordinates not on board"
                 
             elif request=='CONNECT':
                 
