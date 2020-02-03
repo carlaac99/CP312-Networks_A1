@@ -98,7 +98,7 @@ class ClientThread(threading.Thread):
                             while(index < len(results_array)):
                                 colourr = str(results_array[index].colour)
                                 if(colourr != colour_choice):
-                                    results_array.remove(index)
+                                    results_array.pop(index)
                                     index = index -1
                                 index = index + 1
             
@@ -110,7 +110,7 @@ class ClientThread(threading.Thread):
                             
                             while (index < len(results_array)):
                                 if(results_array[index].x != x and y!= results_array[index].y):
-                                    results_array.remove(index)
+                                    results_array.pop(index)
                                     index = index - 1
                                 index = index + 1
         
@@ -119,7 +119,7 @@ class ClientThread(threading.Thread):
                             index = 0
                             while (index < len(results_array)):
                                 if keyword not in results_array[index].message: 
-                                    results_array.remove(index)
+                                    results_array.pop(index)
                                     index = index -1
                                 index=index+1
                             
