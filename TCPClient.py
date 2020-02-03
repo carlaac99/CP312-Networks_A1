@@ -1,3 +1,7 @@
+'''
+Created on Jan. 28, 2020
+@author: carla castaneda
+'''
 # Import socket module
 from socket import * 
 import sys # In order to terminate the program
@@ -8,25 +12,26 @@ serverPort = 6789
 
 # Bind the socket to server address and server port
 clientSocket = socket(AF_INET, SOCK_STREAM)
-
+# clientSocket.connect((serverName, serverPort))
 
 print("1-connect \n8-EXIT ")
 option =0
 
-while (option!=9):
+while (option!=8):
     try:
         option = int(input("Enter menu option number: "))
-        if(option==1 or option==9):
+        if(option==1 or option==8):
             break
         else:
-            print("you must type '1 'to connect first.")
+            print("\nyou need to connect first to continue to options, or exit if you wish to exit the program.")
     except ValueError:
         print("you did not enter a valid number. Try again, or type the number 8 to exit the program.")
         
-connection=False
-while(option<8 and option> 0):
+
+while(True):
     
     user_input=""
+
     if option == 1  :
         user_input = 'CONNECT'
         try:
@@ -55,19 +60,25 @@ while(option<8 and option> 0):
     elif option ==7:
         user_input = 'CLEAR'
 
+ 
     else:
-        print("Invalid menu option.")
+        print("\ninvalid menu option please enter the numbers in the menu.")
 
-    if (option<8 and option>1):
+
+    if (option<8 and option>0):
+
         clientSocket. sendall(user_input.encode())
-        print("encoded")
-        
+
+        if (option==2):
+            print("you have been disconnected")
+            break
+              
         modifiedSentence = clientSocket.recv(2048)
-        print("recv")
+
         print('From server: ', (modifiedSentence).decode())
-        print("decoded")
-        
-        
+
+#              
+          
     print("\n1-connect \n2-disconnect \n3-POST \n4-GET \n5-PIN \n6-UNPIN \n7-CLEAR \n8-EXIT")
     
         
@@ -76,8 +87,9 @@ while(option<8 and option> 0):
             option = int(input("Enter menu option number: "))
             break
         except ValueError:
-            print("you did not enter a valid number.")
+            print("invalid menu option please enter the numbers in the menu..")
 #sentence = input(' Input lower case sentence: ')
 #clientSocket. sendall(user_input.encode())
 
 clientSocket.close()
+
