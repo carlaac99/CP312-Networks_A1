@@ -70,7 +70,6 @@ class ClientThread(threading.Thread):
                     for i in Board:
                         if i.x==x and i.y==y:
                             i.pins+=1
-                            Pins.append(i)
 
                     result = 'PIN'
                 
@@ -230,17 +229,20 @@ class ClientThread(threading.Thread):
                 break
                 #do something
             elif request== 'CLEAR':
-                print("is clear wokring? yes")
+
                 i=0
-                while(i< len(Board)):
-                    if Board[i].pins==0:
-                        Board.pop(i)
+                if(len(Board) != 0):
+                    while(i< len(Board)):
+                        if Board[i].pins==0:
+                            Board.pop(i)
+                            i=i-1
+                        i=i+1
+                        
+                    result="Board now clear"
                     
-                result="Board now clear"
-                
-            else:
-                result="nothing"
-                
+                else:
+                    result="Board is empty cannot clear."
+                    
             connectionSocket.sendall(result.encode())
 
 # Server should be up and running and listening to the incoming connections
@@ -280,6 +282,9 @@ while True:
     
 serverSocket.close()  
 sys.exit()
+        
+    
+
         
     
         
