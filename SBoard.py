@@ -70,6 +70,7 @@ class ClientThread(threading.Thread):
                     for i in Board:
                         if i.x==x and i.y==y:
                             i.pins+=1
+                            Pins.append(i)
 
                     result = 'PIN'
                 
