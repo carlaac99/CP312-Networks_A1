@@ -1,11 +1,13 @@
 # Import socket module
 import threading
 from socket import * 
+
 import sys # In order to terminate the program
 
 # Create a TCP server socket
 #(AF_INET is used for IPv4 protocols)
 #(SOCK_STREAM is used for TCP)
+print_lock = threading.Lock() 
 boardWidth = int(sys.argv[2])   # Width of board
 boardHeight = int(sys.argv[3])  # Height of board
 print("board width: ", boardWidth)
@@ -23,6 +25,7 @@ print(colour_string)
 
 
 serverSocket = socket(AF_INET, SOCK_STREAM)
+# serverSocket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 
 # Assign a port number
 serverPort = 6789
@@ -41,18 +44,19 @@ class ClientThread(threading.Thread):
         
         threading.Thread.__init__(self)
         self.csocket = clientsocket
-        print ("New connection added: ", addr)
+        print ("\nNew connection added: ", addr)
         
     def run(self):
-        print ("Connection from : ", addr)
+        print ("\nConnection from : ", addr)
         #self.csocket.send(bytes("Hi, This is from Server..",'utf-8'))
- 
+
         while True:
+
 
             sentence= self.csocket.recv(2048).decode()
 
             
-            print ("from client", sentence)
+            print ("from client: ", sentence)
             #self.csocket.send(bytes(sentence,'UTF-8'))
 
             sent=sentence.split()
@@ -170,7 +174,7 @@ class ClientThread(threading.Thread):
                     result="An ERROR has occured: please enter integer values"
 
             elif request =='POST':
-                print("POST")
+
 
                 cb =' '
 
@@ -206,9 +210,7 @@ class ClientThread(threading.Thread):
                     else:
                         result = "coordinates not on board, not appended"
                         
-                    for i in Board:
-                        print(i.message)
-                                
+
                     
                 except (IndexError,ValueError):
                     result="an error has occured please try again"
@@ -242,8 +244,10 @@ class ClientThread(threading.Thread):
                     
                 else:
                     result="Board is empty cannot clear."
-                    
-            connectionSocket.sendall(result.encode())
+            
+            self.csocket.sendall(result.encode())
+
+
 
 # Server should be up and running and listening to the incoming connections
 class Note(object):
@@ -266,9 +270,8 @@ class Note(object):
         self.pins=pins
     def __str__(self):
         return "%s %s %s %s %s %s %s" % (self.x, self.y, self.width, self.height, self.colour, self.message, self.pins)
-    
-        
-Board=[]
+   
+
 while True:
     #print('The server is ready to receive')
     serverSocket.listen(1)
@@ -276,7 +279,7 @@ while True:
     # Set up a new connection from the client
     connectionSocket, addr = serverSocket.accept()
     #sentence = connectionSocket.recv(1024).decode()
-    
+
     newthread = ClientThread(addr, connectionSocket)
     newthread.start()
     
